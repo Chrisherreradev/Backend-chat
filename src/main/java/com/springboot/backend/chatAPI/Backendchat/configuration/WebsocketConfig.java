@@ -1,4 +1,4 @@
-package com.springboot.backend.chatAPI.Backendchat;
+package com.springboot.backend.chatAPI.Backendchat.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
