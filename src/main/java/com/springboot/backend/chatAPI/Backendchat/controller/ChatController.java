@@ -1,6 +1,8 @@
 package com.springboot.backend.chatAPI.Backendchat.controller;
 
 import com.springboot.backend.chatAPI.Backendchat.model.Mensaje;
+import com.springboot.backend.chatAPI.Backendchat.model.service.ChatService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -12,6 +14,9 @@ import java.util.Random;
 public class ChatController {
     private String[] colores = {"red", "green", "blue","magenta","purple", "orange", "cyan"};
 
+    @Autowired
+    private ChatService chatService;
+
     @MessageMapping("/mensaje")
     @SendTo("/chat/mensaje")
     public Mensaje recibeMensaje(Mensaje mensaje){
@@ -20,6 +25,8 @@ public class ChatController {
         if (mensaje.getTipo().equals("NUEVO_USUARIO")){
             mensaje.setColor(colores[new Random().nextInt(colores.length)]);
             mensaje.setTexto("nuevo usuario");
+        } else{
+            chatService.guardar(mensaje);
         }
 
         return mensaje;
